@@ -14,7 +14,6 @@ func main() {
 	// Config File
 	userConfigDir, err := os.UserConfigDir()
 	checkErr(err)
-	// Hoster()
 
 	HostMap := GetConf(userConfigDir + "/odooquery/config.yml")
 
@@ -40,9 +39,6 @@ func main() {
 		return
 	}
 	server := HostMap[host]
-
-	fmt.Println("database", database)
-	fmt.Println("server.Database", server.Database)
 
 	if server.Database == "" && database == "" {
 		fmt.Println("no database specified")
