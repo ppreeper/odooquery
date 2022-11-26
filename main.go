@@ -23,7 +23,7 @@ func main() {
 	var host string
 	var database string
 
-	flag.StringVar(&host, "host", "localhost", "odoo host")
+	flag.StringVar(&host, "host", "prod", "odoo host specified in config.yml")
 	flag.StringVar(&database, "d", "", "odoo database")
 
 	flag.StringVar(&q.Model, "model", "", "model")
