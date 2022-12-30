@@ -1,4 +1,5 @@
 ![Build Status](https://github.com/ppreeper/odooquery/actions/workflows/go.yml/badge.svg)
+[![coverage](https://pages.github.com/ppreeper/odooquery/coverage.svg)](https://pages.github.com/ppreeper/odooquery/coverage)
 
 # odooquery
 
