@@ -1,6 +1,6 @@
-![Build Status](https://github.com/ppreeper/odooquery/actions/workflows/go.yml/badge.svg)
-
 # odooquery
+
+![Build Status](https://github.com/ppreeper/odooquery/actions/workflows/go.yml/badge.svg)
 
 Odoo query CLI based on the OdooJRPC library calls
 
