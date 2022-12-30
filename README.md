@@ -1,6 +1,8 @@
-# odooquery
-Odoo query CLI based on the OdooJRPC library calls
+![Build Status](https://github.com/ppreeper/odooquery/actions/workflows/go.yml/badge.svg)
 
+# odooquery
+
+Odoo query CLI based on the OdooJRPC library calls
 
 ## Usage
 
@@ -27,4 +29,3 @@ Usage of odooquery:
 ```bash
 odooquery -host odoo -model "res.company"
 ```
-
