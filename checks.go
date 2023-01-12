@@ -2,12 +2,20 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
 func checkErr(err error) {
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
+	}
+}
+
+func fatalErr(err error) {
+	if err != nil {
+		fmt.Println("error:", err)
+		os.Exit(2)
 	}
 }
 
