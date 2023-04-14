@@ -55,8 +55,8 @@ func main() {
 		fmt.Println("no database specified")
 		return
 	}
-	if database == "" {
-		database = server.Database
+	if database != "" {
+		server.Database = database
 	}
 
 	if q.Model == "" {
@@ -64,7 +64,7 @@ func main() {
 		return
 	}
 
-	oc, err := odooConnect(HostMap[system])
+	oc, err := odooConnect(server)
 	if err != nil {
 		app.errorLog.Println("error:", err)
 		fatalErr(err)
