@@ -27,10 +27,19 @@ func main() {
 	userConfigDir, err := os.UserConfigDir()
 	checkErr(err)
 
-	var configFile, system, database string
+	var configFile, system string
 	flag.StringVar(&configFile, "c", userConfigDir+"/odooquery/config.yml", "odoo connection config file")
 	flag.StringVar(&system, "system", "prod", "odoo host specified in config.yml")
-	flag.StringVar(&database, "d", "", "odoo database")
+
+	var cServer Host
+	flag.StringVar(&cServer.Hostname, "host", "", "odoo host")
+	flag.StringVar(&cServer.Database, "d", "", "odoo database")
+	flag.StringVar(&cServer.Username, "U", "", "odoo username")
+	flag.StringVar(&cServer.Password, "P", "", "odoo password")
+	cServer.Protocol = "jsonrpc"
+	flag.StringVar(&cServer.Schema, "S", "http", "odoo url schema [http|https]")
+	flag.IntVar(&cServer.Port, "port", 8069, "odoo port")
+	cServer.Jobcount = 1
 
 	var q QueryDef
 	flag.StringVar(&q.Model, "model", "", "model")
@@ -45,25 +54,54 @@ func main() {
 	// get config file
 	HostMap := GetConf(configFile)
 
-	if _, ok := HostMap[system]; !ok {
+	// Server connection profile
+	server := HostMap[system]
+	if server.Hostname == "" && cServer.Hostname == "" {
 		fmt.Println("no host specified")
 		return
 	}
-	server := HostMap[system]
+	if cServer.Hostname != "" {
+		server.Hostname = cServer.Hostname
+	}
 
-	if server.Database == "" && database == "" {
+	// 	Database
+	if server.Database == "" && cServer.Database == "" {
 		fmt.Println("no database specified")
 		return
 	}
-	if database != "" {
-		server.Database = database
+	if cServer.Database != "" {
+		server.Database = cServer.Database
+	}
+
+	// 	Username
+	if cServer.Username != "" {
+		server.Username = cServer.Username
+	}
+	// 	Password
+	if cServer.Password != "" {
+		server.Password = cServer.Password
+	}
+	// 	Protocol
+	if server.Protocol == "" && cServer.Protocol != "" {
+		server.Protocol = cServer.Protocol
+	}
+	// 	Schema
+	if server.Schema == "" && cServer.Schema != "" {
+		server.Schema = cServer.Schema
+	}
+	// 	Port
+	if server.Port == 0 {
+		server.Port = cServer.Port
+	}
+	// 	Jobcount
+	if server.Jobcount == 0 {
+		server.Jobcount = cServer.Jobcount
 	}
 
 	if q.Model == "" {
 		fmt.Println("no model specified")
 		return
 	}
-
 	oc, err := odooConnect(server)
 	if err != nil {
 		app.errorLog.Println("error:", err)
