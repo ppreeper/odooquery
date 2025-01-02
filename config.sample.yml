@@ -1,0 +1,18 @@
+odoo_https:
+  hostname: odoo.example.com
+  database: odoo
+  username: admin
+  password: admin
+  protocol: jsonrpc
+  schema: https
+  port: 443
+  jobcount: 2
+odoo_http:
+  hostname: odoo.example.com
+  database: odoo
+  username: admin
+  password: admin
+  protocol: jsonrpc
+  schema: http
+  port: 8069
+  jobcount: 2
