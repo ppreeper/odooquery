@@ -4,13 +4,11 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
-
-	"github.com/ppreeper/odoojrpc"
 )
 
 var mulPatternTests = []struct {
 	filter    string
-	rexpected odoojrpc.FilterArg
+	rexpected []any
 }{
 	{"[]", nil},
 	{"[[]]", nil},
@@ -18,42 +16,60 @@ var mulPatternTests = []struct {
 	{"[)]", nil},
 	{"[()]", nil},
 	{"()", nil},
-	{"[('s','=','A')]",
-		odoojrpc.FilterArg{odoojrpc.FilterArg{"s", "=", "A"}}},
+	{
+		"[('s','=','A')]",
+		[]any{[]any{"s", "=", "A"}},
+	},
 	{"('c','=',3)", nil},
 	{"[('c','=',3]", nil},
-	{"[('c','=',3)]",
-		odoojrpc.FilterArg{odoojrpc.FilterArg{"c", "=", 3}}},
-	{"[('c','=',3.3)]",
-		odoojrpc.FilterArg{odoojrpc.FilterArg{"c", "=", 3.3}}},
-	{"['!',('purchase_ok','=',True)]",
-		odoojrpc.FilterArg{"!", odoojrpc.FilterArg{"purchase_ok", "=", true}}},
-	{"[('c','=',3),('s','=','A')]",
-		odoojrpc.FilterArg{odoojrpc.FilterArg{"c", "=", 3}, odoojrpc.FilterArg{"s", "=", "A"}}},
-	{"[('purchase_ok','=',True),('sale_ok','=',True)]",
-		odoojrpc.FilterArg{odoojrpc.FilterArg{"purchase_ok", "=", true}, odoojrpc.FilterArg{"sale_ok", "=", true}}},
-	{"['|',('purchase_ok','=',True),('sale_ok','=',True)]",
-		odoojrpc.FilterArg{"|", odoojrpc.FilterArg{"purchase_ok", "=", true}, odoojrpc.FilterArg{"sale_ok", "=", true}}},
-	{"['|','&',('purchase_ok','=',True),('sale_ok','=',True),'&',('landed_cost_ok','=',True),('type','=','service')]",
-		odoojrpc.FilterArg{
+	{
+		"[('c','=',3)]",
+		[]any{[]any{"c", "=", 3}},
+	},
+	{
+		"[('c','=',3.3)]",
+		[]any{[]any{"c", "=", 3.3}},
+	},
+	{
+		"['!',('purchase_ok','=',True)]",
+		[]any{"!", []any{"purchase_ok", "=", true}},
+	},
+	{
+		"[('c','=',3),('s','=','A')]",
+		[]any{[]any{"c", "=", 3}, []any{"s", "=", "A"}},
+	},
+	{
+		"[('purchase_ok','=',True),('sale_ok','=',True)]",
+		[]any{[]any{"purchase_ok", "=", true}, []any{"sale_ok", "=", true}},
+	},
+	{
+		"['|',('purchase_ok','=',True),('sale_ok','=',True)]",
+		[]any{"|", []any{"purchase_ok", "=", true}, []any{"sale_ok", "=", true}},
+	},
+	{
+		"['|','&',('purchase_ok','=',True),('sale_ok','=',True),'&',('landed_cost_ok','=',True),('type','=','service')]",
+		[]any{
 			"|",
 			"&",
-			odoojrpc.FilterArg{"purchase_ok", "=", true},
-			odoojrpc.FilterArg{"sale_ok", "=", true},
+			[]any{"purchase_ok", "=", true},
+			[]any{"sale_ok", "=", true},
 			"&",
-			odoojrpc.FilterArg{"landed_cost_ok", "=", true},
-			odoojrpc.FilterArg{"type", "=", "service"},
-		}},
-	{"['&','&',('state','in',('sale','done')),('is_service','=',True),'|',('project_id','!=',False),('task_id','!=',False)]",
-		odoojrpc.FilterArg{
+			[]any{"landed_cost_ok", "=", true},
+			[]any{"type", "=", "service"},
+		},
+	},
+	{
+		"['&','&',('state','in',('sale','done')),('is_service','=',True),'|',('project_id','!=',False),('task_id','!=',False)]",
+		[]any{
 			"&",
 			"&",
-			odoojrpc.FilterArg{"state", "in", odoojrpc.FilterArg{"sale", "done"}},
-			odoojrpc.FilterArg{"is_service", "=", true},
+			[]any{"state", "in", []any{"sale", "done"}},
+			[]any{"is_service", "=", true},
 			"|",
-			odoojrpc.FilterArg{"project_id", "!=", false},
-			odoojrpc.FilterArg{"task_id", "!=", false},
-		}},
+			[]any{"project_id", "!=", false},
+			[]any{"task_id", "!=", false},
+		},
+	},
 }
 
 func TestParseFilter(t *testing.T) {

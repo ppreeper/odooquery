@@ -1,5 +1,5 @@
-github.com/ppreeper/odoojrpc v1.1.3 h1:7EwscTr7BcbGI6AiUrn01ULPv9hvVARLINGNgAouu0k=
-github.com/ppreeper/odoojrpc v1.1.3/go.mod h1:WF3PF/lktl2RoS/+ht4zwQcgGUHLjfjn0NSP1RIanTI=
+github.com/ppreeper/odoorpc v0.0.0-20240619222409-d2ceabd3f081 h1:AgAYpKahwT2MG9meGKKHds1m+p/W2xxjiS8qBqSD5zc=
+github.com/ppreeper/odoorpc v0.0.0-20240619222409-d2ceabd3f081/go.mod h1:gjxdhwQgGxYLhUCf5/VH2/sqNnDeqTf4ng6k5eidCEU=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=

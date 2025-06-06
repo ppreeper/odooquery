@@ -8,13 +8,14 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ppreeper/odoojrpc"
+	"github.com/ppreeper/odoorpc"
+	"github.com/ppreeper/odoorpc/odoojrpc"
 )
 
 type application struct {
 	errorLog *log.Logger
 	infoLog  *log.Logger
-	oc       *odoojrpc.Odoo
+	oc       odoorpc.Odoo
 }
 
 func main() {
@@ -102,12 +103,14 @@ func main() {
 		fmt.Println("no model specified")
 		return
 	}
-	oc, err := odooConnect(server)
-	if err != nil {
-		app.errorLog.Println("error:", err)
-		fatalErr(err)
-	}
-	app.oc = oc
+
+	app.oc = odoojrpc.NewOdoo().
+		WithHostname(server.Hostname).
+		WithPort(server.Port).
+		WithDatabase(server.Database).
+		WithUsername(server.Username).
+		WithPassword(server.Password).
+		WithSchema(server.Schema)
 
 	app.getRecords(&q)
 }
@@ -123,7 +126,7 @@ func (app *application) getRecords(q *QueryDef) {
 	filtp, err := parseFilter(q.Filter)
 	checkErr(err)
 
-	rr, err := app.oc.SearchRead(umdl, filtp, q.Offset, q.Limit, fields)
+	rr, err := app.oc.SearchRead(umdl, q.Offset, q.Limit, fields, filtp)
 	fatalErr(err)
 	if q.Count {
 		fmt.Println("records:", len(rr))

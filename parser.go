@@ -4,8 +4,6 @@ import (
 	"errors"
 	"strconv"
 	"strings"
-
-	"github.com/ppreeper/odoojrpc"
 )
 
 func parseFields(field string) (fields []string) {
@@ -17,10 +15,10 @@ func parseFields(field string) (fields []string) {
 	return
 }
 
-func parseFilter(filter string) (filters odoojrpc.FilterArg, err error) {
+func parseFilter(filter string) (filters []any, err error) {
 	filter = strings.TrimSpace(filter)
 
-	//pre-parse
+	// pre-parse
 	sqBCount, sqBDepth, parenCount, _ := countBrackets(filter)
 	if len(filter) == 0 {
 		return
@@ -40,17 +38,17 @@ func parseFilter(filter string) (filters odoojrpc.FilterArg, err error) {
 	checkErr(err)
 
 	parenCount = 0
-	var arg odoojrpc.FilterArg
-	var sList odoojrpc.FilterArg
+	var arg []any
+	var sList []any
 	for i := 1; i < len(tokens)-1; i++ {
 		f := tokens[i]
 		switch {
 		case f == "(":
 			parenCount += 1
 			if parenCount < 2 {
-				arg = odoojrpc.FilterArg{}
+				arg = []any{}
 			} else {
-				sList = odoojrpc.FilterArg{}
+				sList = []any{}
 			}
 		case f == ")":
 			parenCount -= 1
