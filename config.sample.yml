@@ -6,7 +6,6 @@ odoo_https:
   protocol: jsonrpc
   schema: https
   port: 443
-  jobcount: 2
 odoo_http:
   hostname: odoo.example.com
   database: odoo
@@ -15,4 +14,3 @@ odoo_http:
   protocol: jsonrpc
   schema: http
   port: 8069
-  jobcount: 2

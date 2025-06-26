@@ -2,30 +2,23 @@
 
 ![Build Status](https://github.com/ppreeper/odooquery/actions/workflows/go.yml/badge.svg)
 
-Odoo query CLI based on the OdooJRPC library calls
+Odoo query CLI based on the OdooRPC library calls
 
 ## Usage
 
 ```bash
-Usage of odooquery:
-  -count
-        count records
-  -d string
-        odoo database
-  -fields string
-        fields
-  -filter string
-        filter
-  -host string
-        odoo host specified in config.yml (default "prod")
-  -limit int
-        limit
-  -model string
-        model
-  -offset int
-        offset
+Usage:
+  odooquery <system> <model> [flags]
+
+Flags:
+  -c, --count           count records
+  -f, --fields string   fields field1,field2,...fieldN
+  -F, --filter string   filter "[('field', 'op', value), ...]"
+  -h, --help            help for odooquery
+  -l, --limit int       limit records, 0 for no limit
+  -o, --offset int      offset records, 0 for no offset
 ```
 
 ```bash
-odooquery -host odoo -model "res.company"
+odooquery odoosystem res.company
 ```
