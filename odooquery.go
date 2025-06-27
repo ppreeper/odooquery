@@ -46,6 +46,49 @@ func NewHost() *Host {
 	}
 }
 
+func getServerConfigByName(name string) (*Host, error) {
+	if name == "" {
+		return nil, fmt.Errorf("server name cannot be empty")
+	}
+
+	server := NewHost()
+	server.Hostname = viper.GetString(name + ".hostname")
+	server.Database = viper.GetString(name + ".database")
+	server.Username = viper.GetString(name + ".username")
+	server.Password = viper.GetString(name + ".password")
+	protocol := viper.GetString(name + ".protocol")
+	if protocol != "" {
+		server.Protocol = protocol
+	}
+	schema := viper.GetString(name + ".schema")
+	if schema != "" {
+		server.Schema = schema
+	}
+	port := viper.GetInt(name + ".port")
+	if port == 0 {
+		if server.Schema == "https" {
+			server.Port = 443
+		} else {
+			server.Port = 8069
+		}
+	} else {
+		server.Port = port
+	}
+
+	return server, nil
+}
+
+func getOdooClient(server *Host) odoorpc.Odoo {
+	odooClient := odoojrpc.NewOdoo().
+		WithHostname(server.Hostname).
+		WithPort(server.Port).
+		WithSchema(server.Schema).
+		WithDatabase(server.Database).
+		WithUsername(server.Username).
+		WithPassword(server.Password)
+	return odooClient
+}
+
 func main() {
 	// Config File
 	userConfigDir, err := os.UserConfigDir()
@@ -81,41 +124,11 @@ func main() {
 				Count:  count,
 			}
 
-			cServer := NewHost()
-			cServer.Hostname = viper.GetString(system + ".hostname")
-			cServer.Database = viper.GetString(system + ".database")
-			cServer.Username = viper.GetString(system + ".username")
-			cServer.Password = viper.GetString(system + ".password")
-			protocol := viper.GetString(system + ".protocol")
-			if protocol != "" {
-				cServer.Protocol = protocol
-			}
-			schema := viper.GetString(system + ".schema")
-			if schema != "" {
-				cServer.Schema = schema
-			}
-			port := viper.GetInt(system + ".port")
-			if port == 0 {
-				if cServer.Schema == "https" {
-					cServer.Port = 443
-				} else {
-					cServer.Port = 8069
-				}
-			} else {
-				cServer.Port = port
-			}
-
-			oc := odoojrpc.NewOdoo().
-				WithHostname(cServer.Hostname).
-				WithPort(cServer.Port).
-				WithDatabase(cServer.Database).
-				WithUsername(cServer.Username).
-				WithPassword(cServer.Password).
-				WithSchema(cServer.Schema)
-
-			if err := oc.Login(); err != nil {
-				fatalErr(err, "login failed: please check system credentials")
-			}
+			server, err := getServerConfigByName(system)
+			fatalErr(err)
+			oc := getOdooClient(server)
+			err = oc.Login()
+			fatalErr(err, "login failed: please check system credentials")
 
 			getRecords(oc, q)
 		},
@@ -127,7 +140,6 @@ func main() {
 	rootCmd.Flags().BoolP("count", "c", false, "count records")
 
 	if err := fang.Execute(context.Background(), rootCmd); err != nil {
-
 		fmt.Println("Error executing command:", err)
 		os.Exit(1)
 	}
