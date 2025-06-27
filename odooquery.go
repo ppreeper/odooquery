@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
 
+	"github.com/charmbracelet/fang"
 	"github.com/ppreeper/odoorpc"
 	"github.com/ppreeper/odoorpc/odoojrpc"
 	"github.com/spf13/cobra"
@@ -124,7 +126,7 @@ func main() {
 	rootCmd.Flags().StringP("filter", "F", "", "filter \"[('field', 'op', value), ...]\"")
 	rootCmd.Flags().BoolP("count", "c", false, "count records")
 
-	if err := rootCmd.Execute(); err != nil {
+	if err := fang.Execute(context.Background(), rootCmd); err != nil {
 
 		fmt.Println("Error executing command:", err)
 		os.Exit(1)
