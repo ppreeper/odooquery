@@ -128,7 +128,7 @@ func main() {
 			fatalErr(err)
 			oc := getOdooClient(server)
 			err = oc.Login()
-			fatalErr(err, "login failed: please check system credentials")
+			fatalErr(err, "login failed")
 
 			getRecords(oc, q)
 		},
@@ -153,19 +153,15 @@ func getRecords(oc odoorpc.Odoo, q QueryDef) {
 
 	if q.Count {
 		count, err := oc.Count(umdl, filtp)
-		// fatalErr(err, "query error", "check if model exists")
-		fatalErr(err)
+		fatalErr(err, "query error", "check if model exists")
 		fmt.Println("records:", count)
 		return
 	}
 
 	fields := parseFields(q.Fields)
-	if q.Count {
-		fields = []string{"id"}
-	}
 
 	rr, err := oc.SearchRead(umdl, q.Offset, q.Limit, fields, filtp)
-	fatalErr(err, "query error")
+	fatalErr(err, "search read error")
 
 	jsonStr, err := json.MarshalIndent(rr, "", "  ")
 	fatalErr(err, "record marshalling error")
