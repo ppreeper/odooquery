@@ -114,6 +114,7 @@ func main() {
 			fields, _ := cmd.Flags().GetString("fields")
 			filter, _ := cmd.Flags().GetString("filter")
 			count, _ := cmd.Flags().GetBool("count")
+			debugMode, _ := cmd.Flags().GetBool("debug")
 
 			q := QueryDef{
 				Model:  model,
@@ -128,9 +129,12 @@ func main() {
 			fatalErr(err)
 			oc := getOdooClient(server)
 			err = oc.Login()
+			if debugMode {
+				fatalErr(err)
+			}
 			fatalErr(err, "login failed")
 
-			getRecords(oc, q)
+			getRecords(oc, q, debugMode)
 		},
 	}
 	rootCmd.Flags().IntP("offset", "o", 0, "offset records, 0 for no offset")
@@ -138,6 +142,7 @@ func main() {
 	rootCmd.Flags().StringP("fields", "f", "", "fields field1,field2,...fieldN")
 	rootCmd.Flags().StringP("filter", "F", "", "filter \"[('field', 'op', value), ...]\"")
 	rootCmd.Flags().BoolP("count", "c", false, "count records")
+	rootCmd.Flags().BoolP("debug", "d", false, "debug mode")
 
 	if err := fang.Execute(context.Background(), rootCmd); err != nil {
 		fmt.Println("Error executing command:", err)
@@ -145,7 +150,7 @@ func main() {
 	}
 }
 
-func getRecords(oc odoorpc.Odoo, q QueryDef) {
+func getRecords(oc odoorpc.Odoo, q QueryDef, debugMode bool) {
 	umdl := strings.ReplaceAll(q.Model, "_", ".")
 
 	filtp, err := parseFilter(q.Filter)
@@ -160,8 +165,16 @@ func getRecords(oc odoorpc.Odoo, q QueryDef) {
 
 	fields := parseFields(q.Fields)
 
+	if debugMode {
+		fmt.Println("model:", umdl, "offset:", q.Offset, "limit:", q.Limit, "fields:", fields, "filter:", filtp)
+	}
+
 	rr, err := oc.SearchRead(umdl, q.Offset, q.Limit, fields, filtp)
-	fatalErr(err, "search read error")
+	if debugMode {
+		fatalErr(err)
+	} else {
+		fatalErr(err, "search read error")
+	}
 
 	jsonStr, err := json.MarshalIndent(rr, "", "  ")
 	fatalErr(err, "record marshalling error")
