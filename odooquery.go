@@ -10,13 +10,14 @@ import (
 	"github.com/charmbracelet/fang"
 	"github.com/ppreeper/odoorpc"
 	"github.com/ppreeper/odoorpc/odoojrpc"
+	"github.com/ppreeper/odoosearchdomain"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 type QueryDef struct {
 	Model  string
-	Filter string
+	Domain string
 	Offset int
 	Limit  int
 	Fields string
@@ -112,7 +113,7 @@ func main() {
 			limit, _ := cmd.Flags().GetInt("limit")
 			offset, _ := cmd.Flags().GetInt("offset")
 			fields, _ := cmd.Flags().GetString("fields")
-			filter, _ := cmd.Flags().GetString("filter")
+			domain, _ := cmd.Flags().GetString("domain")
 			count, _ := cmd.Flags().GetBool("count")
 			debugMode, _ := cmd.Flags().GetBool("debug")
 
@@ -121,7 +122,7 @@ func main() {
 				Offset: offset,
 				Limit:  limit,
 				Fields: fields,
-				Filter: filter,
+				Domain: domain,
 				Count:  count,
 			}
 
@@ -140,9 +141,9 @@ func main() {
 	rootCmd.Flags().IntP("offset", "o", 0, "offset records, 0 for no offset")
 	rootCmd.Flags().IntP("limit", "l", 0, "limit records, 0 for no limit")
 	rootCmd.Flags().StringP("fields", "f", "", "fields field1,field2,...fieldN")
-	rootCmd.Flags().StringP("filter", "F", "", "filter \"[('field', 'op', value), ...]\"")
+	rootCmd.Flags().StringP("domain", "d", "", "domain \"[('field', 'op', value), ...]\"")
 	rootCmd.Flags().BoolP("count", "c", false, "count records")
-	rootCmd.Flags().BoolP("debug", "d", false, "debug mode")
+	rootCmd.Flags().BoolP("debug", "D", false, "debug mode")
 
 	if err := fang.Execute(context.Background(), rootCmd); err != nil {
 		fmt.Println("Error executing command:", err)
@@ -153,23 +154,23 @@ func main() {
 func getRecords(oc odoorpc.Odoo, q QueryDef, debugMode bool) {
 	umdl := strings.ReplaceAll(q.Model, "_", ".")
 
-	filtp, err := parseFilter(q.Filter)
+	domain, err := odoosearchdomain.ParseDomain(q.Domain)
 	checkErr(err)
 
 	if q.Count {
-		count, err := oc.Count(umdl, filtp)
+		count, err := oc.Count(umdl, domain)
 		fatalErr(err, "query error", "check if model exists")
 		fmt.Println("records:", count)
 		return
 	}
 
-	fields := parseFields(q.Fields)
+	fields := odoosearchdomain.Fields(q.Fields)
 
 	if debugMode {
-		fmt.Println("model:", umdl, "offset:", q.Offset, "limit:", q.Limit, "fields:", fields, "filter:", filtp)
+		fmt.Println("model:", umdl, "offset:", q.Offset, "limit:", q.Limit, "fields:", fields, "domain:", domain)
 	}
 
-	rr, err := oc.SearchRead(umdl, q.Offset, q.Limit, fields, filtp)
+	rr, err := oc.SearchRead(umdl, q.Offset, q.Limit, fields, domain)
 	if debugMode {
 		fatalErr(err)
 	} else {

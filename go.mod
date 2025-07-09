@@ -1,12 +1,11 @@
 module github.com/ppreeper/odooquery
 
-go 1.23.0
-
-toolchain go1.24.4
+go 1.24.4
 
 require (
-	github.com/charmbracelet/fang v0.2.0
-	github.com/ppreeper/odoorpc v0.0.0-20240619222409-d2ceabd3f081
+	github.com/charmbracelet/fang v0.3.0
+	github.com/ppreeper/odoorpc v0.0.0-20250709144550-fec27a654569
+	github.com/ppreeper/odoosearchdomain v0.0.0-20250709143406-27da4c9c8ed2
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 )
@@ -16,7 +15,7 @@ require (
 	github.com/charmbracelet/lipgloss/v2 v2.0.0-beta1 // indirect
 	github.com/charmbracelet/x/ansi v0.9.3 // indirect
 	github.com/charmbracelet/x/cellbuf v0.0.13 // indirect
-	github.com/charmbracelet/x/exp/charmtone v0.0.0-20250627134340-c144409e381c // indirect
+	github.com/charmbracelet/x/exp/charmtone v0.0.0-20250708181618-a60a724ba6c3 // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.3.0 // indirect

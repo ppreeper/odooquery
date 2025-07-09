@@ -4,6 +4,8 @@ github.com/charmbracelet/colorprofile v0.3.1 h1:k8dTHMd7fgw4bnFd7jXTLZrSU/CQrKnL
 github.com/charmbracelet/colorprofile v0.3.1/go.mod h1:/GkGusxNs8VB/RSOh3fu0TJmQ4ICMMPApIIVn0KszZ0=
 github.com/charmbracelet/fang v0.2.0 h1:F2sK2Zjy9kRYz/xUSF1o89DNj2BHKpxVKT7TA21KZi0=
 github.com/charmbracelet/fang v0.2.0/go.mod h1:TPpME1GkB6/4uR4wXmPnugTCkqRLgZkWSH+aMds6454=
+github.com/charmbracelet/fang v0.3.0 h1:Be6TB+ExS8VWizTQRJgjqbJBudKrmVUet65xmFPGhaA=
+github.com/charmbracelet/fang v0.3.0/go.mod h1:b0ZfEXZeBds0I27/wnTfnv2UVigFDXHhrFNwQztfA0M=
 github.com/charmbracelet/lipgloss/v2 v2.0.0-beta1 h1:SOylT6+BQzPHEjn15TIzawBPVD0QmhKXbcb3jY0ZIKU=
 github.com/charmbracelet/lipgloss/v2 v2.0.0-beta1/go.mod h1:tRlx/Hu0lo/j9viunCN2H+Ze6JrmdjQlXUQvvArgaOc=
 github.com/charmbracelet/x/ansi v0.9.3 h1:BXt5DHS/MKF+LjuK4huWrC6NCvHtexww7dMayh6GXd0=
@@ -12,6 +14,8 @@ github.com/charmbracelet/x/cellbuf v0.0.13 h1:/KBBKHuVRbq1lYx5BzEHBAFBP8VcQzJejZ
 github.com/charmbracelet/x/cellbuf v0.0.13/go.mod h1:xe0nKWGd3eJgtqZRaN9RjMtK7xUYchjzPr7q6kcvCCs=
 github.com/charmbracelet/x/exp/charmtone v0.0.0-20250627134340-c144409e381c h1:2GELBLPgfSbHU53bsQhR9XIgNuVZ6w+Rz8RWV5Lq+A4=
 github.com/charmbracelet/x/exp/charmtone v0.0.0-20250627134340-c144409e381c/go.mod h1:T9jr8CzFpjhFVHjNjKwbAD7KwBNyFnj2pntAO7F2zw0=
+github.com/charmbracelet/x/exp/charmtone v0.0.0-20250708181618-a60a724ba6c3 h1:1xwHZg6eMZ9Wv5TE1UGub6ARubyOd1Lo5kPUI/6VL50=
+github.com/charmbracelet/x/exp/charmtone v0.0.0-20250708181618-a60a724ba6c3/go.mod h1:T9jr8CzFpjhFVHjNjKwbAD7KwBNyFnj2pntAO7F2zw0=
 github.com/charmbracelet/x/exp/golden v0.0.0-20240806155701-69247e0abc2a h1:G99klV19u0QnhiizODirwVksQB91TJKV/UaTnACcG30=
 github.com/charmbracelet/x/exp/golden v0.0.0-20240806155701-69247e0abc2a/go.mod h1:wDlXFlCrmJ8J+swcL/MnGUuYnqgQdW9rhSD61oNMb6U=
 github.com/charmbracelet/x/term v0.2.1 h1:AQeHeLZ1OqSXhrAWpYUtZyX1T3zVxfpZuEQMIQaGIAQ=
@@ -53,6 +57,14 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/ppreeper/odoorpc v0.0.0-20240619222409-d2ceabd3f081 h1:AgAYpKahwT2MG9meGKKHds1m+p/W2xxjiS8qBqSD5zc=
 github.com/ppreeper/odoorpc v0.0.0-20240619222409-d2ceabd3f081/go.mod h1:gjxdhwQgGxYLhUCf5/VH2/sqNnDeqTf4ng6k5eidCEU=
+github.com/ppreeper/odoorpc v0.0.0-20250709144550-fec27a654569 h1:PgizwfhrroAC1fe4BPUiRRe4hwyBKCNQ/9qxvQEfvv4=
+github.com/ppreeper/odoorpc v0.0.0-20250709144550-fec27a654569/go.mod h1:1LCqT4uzg2uMmmbIFaj7OCzm5l4NlONJOWItvUH6jYo=
+github.com/ppreeper/odoosearchdomain v0.0.0-20250708221957-87d678083726 h1:m0Ix5HJpLNZmKdmHNoQ1Viq5+JiidQaVlun7K5eMs2w=
+github.com/ppreeper/odoosearchdomain v0.0.0-20250708221957-87d678083726/go.mod h1:xPiAaoBcc6dYKfBh5UE3VVCMxqaLAF/JOrf94bYZ/7M=
+github.com/ppreeper/odoosearchdomain v0.0.0-20250709131806-5aeeaf715696 h1:dJafDvwdjnrifbfdsrhXu1JEQS09RUcTWiyHB7+G8ac=
+github.com/ppreeper/odoosearchdomain v0.0.0-20250709131806-5aeeaf715696/go.mod h1:xPiAaoBcc6dYKfBh5UE3VVCMxqaLAF/JOrf94bYZ/7M=
+github.com/ppreeper/odoosearchdomain v0.0.0-20250709143406-27da4c9c8ed2 h1:p3sN2qEjdextzO9Phjg9SOvm9JN3ZW1IcoF/qy2slSw=
+github.com/ppreeper/odoosearchdomain v0.0.0-20250709143406-27da4c9c8ed2/go.mod h1:xPiAaoBcc6dYKfBh5UE3VVCMxqaLAF/JOrf94bYZ/7M=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
 github.com/rivo/uniseg v0.4.7/go.mod h1:FN3SvrM+Zdj16jyLfmOkMNblXMcoc8DfTHruCPUcx88=
